@@ -1,0 +1,109 @@
+{
+    "id": 8041,
+    "name": "sampleformula1",
+    "userId": 197288,
+    "accountId": 176546,
+    "createdDate": "2019-08-21T14:45:45Z",
+    "steps": [
+        {
+            "id": 84569,
+            "onSuccess": [
+                "ddvv"
+            ],
+            "onFailure": [],
+            "name": "rer",
+            "type": "script",
+            "properties": {
+                "body": "done({list: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,1,2,3,4,5,6,7,1,2,3,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,32,2,1,2,2,3,3,3,3,2,2,1,1,1,1,1,1,1,2,23,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]});"
+            }
+        },
+        {
+            "id": 84568,
+            "onSuccess": [
+                "ddvv"
+            ],
+            "onFailure": [],
+            "name": "InputParams",
+            "type": "script",
+            "properties": {
+                "body": "done(\"fdfd\");"
+            }
+        },
+        {
+            "id": 84567,
+            "onSuccess": [
+                "rer"
+            ],
+            "onFailure": [],
+            "name": "fdf",
+            "type": "script",
+            "properties": {
+                "body": "var delayInMilliseconds = 25000; //1 second\n\nsetTimeout(function() {\n done(true);\n}, delayInMilliseconds);\n"
+            }
+        },
+        {
+            "id": 84566,
+            "onSuccess": [
+                "fdf"
+            ],
+            "onFailure": [],
+            "name": "fd",
+            "type": "script",
+            "properties": {
+                "body": "dosadsad\n  done(\"success\");\n\n"
+            }
+        },
+        {
+            "id": 84565,
+            "onSuccess": [
+                "InputParams"
+            ],
+            "onFailure": [
+                "CustomFieldParams"
+            ],
+            "name": "ddvv",
+            "type": "loop",
+            "properties": {
+                "list": "${steps.rer.list}"
+            }
+        },
+        {
+            "id": 84564,
+            "onSuccess": [],
+            "onFailure": [],
+            "name": "CustomFieldParams",
+            "type": "script",
+            "properties": {
+                "body": "\nlet c= trigger.args['apiKey']\ndone({\n \n  b: \"success\",\n  c:c\n});"
+            }
+        }
+    ],
+    "triggers": [
+        {
+            "id": 7040,
+            "onSuccess": [
+                "fd"
+            ],
+            "onFailure": [],
+            "type": "scheduled",
+            "async": true,
+            "name": "trigger",
+            "properties": {
+                "cron": "0 0/60 * * * ?"
+            }
+        }
+    ],
+    "engine": "v3",
+    "active": true,
+    "debugLoggingEnabled": true,
+    "singleThreaded": false,
+    "configuration": [
+        {
+            "id": 21019,
+            "key": "variable1",
+            "name": "variable1",
+            "type": "value",
+            "required": true
+        }
+    ]
+}

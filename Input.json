@@ -1,0 +1,42 @@
+{
+    "dev": {
+        "options": {
+            "hostname": "staging.cloud-elements.com",
+            "headers": {
+                "Authorization": "User Br/8x5m9lojrGnqc0uHrEnIa39di65w1D3wp9rFLQP0=, Organization c9584f9cc4a4c8391568438a9a3041a2",
+                "accept": "application/json"
+            }
+        },
+        "Elements": {
+            "element_ids": []
+        },
+        "formulas": {
+            "formula_ids": [
+                25511  
+            ]
+        }
+    },
+    "prod": {
+        "options": {
+            "hostname": "api.cloud-elements.com",
+            "headers": {
+                "Authorization": "User /AY/QjevBKxPKAUCl5lsNQCO/DLw0d0mhq+yBzilfiU=, Organization aad83f656bd976d483c78b88f7fb8db2",
+                "Content-Type": "application/json"
+            },
+            "method": "POST",
+            "path": "/elements/api-v2/formulas",
+            "Content-Length": 572
+        },
+        "Elements": {
+            "element_ids": []
+        },
+        "formulas": {
+            "formula_ids": [
+                8250
+            ]
+        }
+    },
+    "mapper": {
+        "25511": 8250
+    }
+}
