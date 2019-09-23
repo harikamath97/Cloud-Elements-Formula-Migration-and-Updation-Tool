@@ -6,8 +6,6 @@ function downloadFormula(options, formulas) {
     return new Promise((resolve, reject) => {
         let body;
         const req = https.get(options, (res) => {
-            console.log('statusCode:', res.statusCode);
-            // console.log('HEADERS: ' + JSON.stringify(res.headers));
             res.setEncoding('utf8');
 
             res.pipe(JSONStream.parse()).on('data', function (chunk) {

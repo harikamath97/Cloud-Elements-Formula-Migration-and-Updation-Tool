@@ -8,13 +8,21 @@ var setFormula = require('./Setformulatemplate');
 const shelljs = require('shelljs');
 const readlineSync = require('readline-sync');
 
+
+// --------------------------------------------------------------
+    //execution start point
+// --------------------------------------------------------------
+
 async function main() {
   var values = await Readconfig('Input.json');
   console.log("start");
   let formulas = values.dev.formulas.formula_ids;
-  /*
-To delete all files under dev folder
-*/
+
+
+// --------------------------------------------------------------
+    //To delete all files under dev folder
+// --------------------------------------------------------------
+
   const directory = 'dev';
   await fs.readdir(directory, (err, files) => {
     if (err) throw err;
@@ -24,7 +32,13 @@ To delete all files under dev folder
       });
     }
   });
-  /*End */
+  /*End of delete*/
+
+
+// --------------------------------------------------------------
+    //code to download formulas from development into the system for updation to production
+// --------------------------------------------------------------
+
   for (i in formulas) {
     let option = values.dev.options
     option.method = 'GET'
@@ -34,19 +48,33 @@ To delete all files under dev folder
     })
   }
   console.log("Download completed Successfully");
+                           
+  
   switch (process.argv[2]) {
+    
     case 'migration':
       migration();
       break;
+    
     case 'update':
       update('update');
       break;
+    
     case 'revert':
       update('revert');
+      break;
+    
     default:
       console.log('specify the correct operaion...!');
+      break
   }
 }
+
+
+// --------------------------------------------------------------
+    //code for adding a new formula to production from development
+// --------------------------------------------------------------
+
 async function migration() {
   var values = await Readconfig('Input.json');
   let option = values.prod.options;
@@ -66,25 +94,40 @@ async function migration() {
 }
 
 
+// --------------------------------------------------------------
+    //code for update formula 
+// --------------------------------------------------------------
+
 async function update(task) {
 
   let dir;
   let props;
   let flag = false;
   let updatetimestamp = new Date();
-
   var checkpoint = './prod/' + updatetimestamp;
+  var values = await Readconfig('Input.json');
+  let prodcontentlist = fs.readdirSync('prod');
 
+/* Creating the repo in prod with the execution timestamp as the repo name */
+  
   if (!fs.existsSync(checkpoint)) {
     fs.mkdirSync(checkpoint);
   }
 
+// choosing the update option whether or not to revert changes
+  
   if (task === 'revert') {
-    dir = 'prod'
-  } else {
+    console.log("Following are available restore points."); 
+    console.log(prodcontentlist);
+    var restorepoint = readlineSync.question("Please make a choice: ");
+
+    dir = 'prod/'+restorepoint+'/'
+  } else { 
     dir = 'dev'
   }
-  var values = await Readconfig('Input.json');
+
+// Fetching the list of all the files in the repo as mentioned in 'dir' variable
+  
   let files = fs.readdirSync(dir);
   for (i in files) {
     let devfile = await Readconfig(dir + '/' + files[i]);
@@ -100,21 +143,22 @@ async function update(task) {
         throw err;
       }
     });
+
     let prodname = existingformulatemplate.name;
     let devname = devfile.name;
     let terminate = false;
-
     if (prodname !== devname) {
-      var data = readlineSync.question('Seems like the formula in production has(' + prodname + ':' + devname + ') a different name in development! Do you wish to proceed (y/n):');
-      if (data === 'n') {
-        console.log('Migration terminated');
-        terminate = true;
-      }
+      var data = readlineSync.question('Seems like the formula in production has ( ' + prodname + ' : ' + devname + ' ) a different name in development!Do you wish to proceed with the Updation (Y)es / (N)o  : ');
+      if (data.toUpperCase() === 'N' || data.toUpperCase() === 'NO'){
+          console.log('Migration terminated');
+          terminate = true;
+        }
     }
+ 
     for (i in existingformulatemplate.steps) {
       if (existingformulatemplate.steps[i].name === "Props" || existingformulatemplate.steps[i].name === "props") {
-        props = existingformulatemplate.steps[i]
-        flag = true
+        props = existingformulatemplate.steps[i];
+        flag = true;
       }
     }
 
@@ -148,8 +192,6 @@ async function update(task) {
     for (i in existingformulatemplate.steps) {
       for (j = 0; j < devlength; j++) {
         if (existingformulatemplate.steps[i].name !== devfile.steps[j].name) {
-          console.log("prod:",existingformulatemplate.steps[i].name);
-          console.log("dev: ",devfile.steps[j].name);
           continue;
         }
         else {
@@ -178,13 +220,13 @@ async function update(task) {
     if (terminate === false) {
       await setFormula(option, JSON.stringify(existingformulatemplate)).catch(err => {
         console.log("Set new formula request failed");
-        // console.log(err);
+        console.log(err);
       })
       console.log("New steps added :", stepsupdate);
       console.log("Old steps deleted :",stepsdelete);
     }
   }
 
-  console.log("DONE");
+  console.log("The Updation has been successfully completed!");
 }
 main();  
