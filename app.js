@@ -5,10 +5,7 @@ const fs = require('fs');
 const path = require('path');
 var getFormula = require('./Getformulatemplate');
 var setFormula = require('./Setformulatemplate');
-// const shelljs = require('shelljs');
 const readlineSync = require('readline-sync');
-// var delfs = require('extfs');
-// var async = require('async');
 
 // --------------------------------------------------------------
 //execution start point
@@ -58,27 +55,7 @@ async function main() {
   // --------------------------------------------------------------
 
 
-  // let loopobject = {};
-
-  // for (i in formulas) {
-  //   let option = values.dev.options
-  //   option.method = 'GET'
-  //   option.path = "/elements/api-v2/formulas/" + formulas[i] + "/export";
-  //   loopobject["task " + (Number(i))] = function(){
-  //     downloadFormula(option,formulas)
-  //   }
-  //   console.log("Check:", i);
-  // }
-  // console.log("Loop Object :",loopobject);
-
-  //  // Async Parallel 
-
-  // await async.parallel(loopobject,function(err,results){
-  //   if(err){
-  //     console.log("Unsuccessful download request",err);
-  //   } 
-  // });
-
+  
   for (i in formulas) {
     let option = values.dev.options
     option.method = 'GET'
