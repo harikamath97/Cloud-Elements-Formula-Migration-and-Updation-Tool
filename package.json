@@ -9,7 +9,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update": "node app update",
+    "revert": "node app revert",
+    "migrate": "node app migrate"
   },
   "repository": {
     "type": "git",

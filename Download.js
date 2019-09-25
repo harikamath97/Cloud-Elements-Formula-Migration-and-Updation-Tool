@@ -1,7 +1,7 @@
 const https = require('https');
 const fs = require('fs');
 const JSONStream = require('JSONStream');
-function downloadFormula(options, formulas) {
+function downloadFormula(options,formulas) {
 
     return new Promise((resolve, reject) => {
         let body;
